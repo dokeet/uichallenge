@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "../components/shopItem.module.css"
+import styles from "../components/ShopItem.module.css"
 export default function ShopItem({
   photo,
   name,
