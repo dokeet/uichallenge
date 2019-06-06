@@ -6,14 +6,12 @@
  */
 
 import React from "react"
-import { Context } from "../context/Context"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 import "./layout.css"
 import Header from "./header"
 
 function Layout({ children }) {
-  const { state } = React.useContext(Context)
 
   return (
     <StaticQuery
@@ -28,10 +26,7 @@ function Layout({ children }) {
       `}
       render={data => (
         <>
-          <Header
-            siteTitle={data.site.siteMetadata.title}
-            shopCounter={state.totalAmount}
-          />
+
 
           <main>{children}</main>
         </>
