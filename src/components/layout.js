@@ -7,31 +7,13 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import { StaticQuery, graphql } from "gatsby"
 import "./layout.css"
-import Header from "./header"
 
 function Layout({ children }) {
-
   return (
-    <StaticQuery
-      query={graphql`
-        query SiteTitleQuery {
-          site {
-            siteMetadata {
-              title
-            }
-          }
-        }
-      `}
-      render={data => (
-        <>
-
-
-          <main>{children}</main>
-        </>
-      )}
-    />
+    <>
+      <main>{children}</main>
+    </>
   )
 }
 
