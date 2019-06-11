@@ -19,7 +19,7 @@ const Header = ({ siteTitle, totalAmount, shopCounter }) => {
           <strong>Ez</strong>shop
         </h3>
         <div className={styles.shoppingCart}>
-          <h3 style={{ marginRight: "0.5rem" }}>{totalAmount}</h3>
+          <h3 style={{ marginRight: "1.5rem" }}>${parseFloat(Math.round(totalAmount * 100) / 100).toFixed(2)}</h3>
           <img src={ShoppingCart} height="30px" alt="Shopping Cart" />
           <div className={styles.cartCounter} data-counter={shopCounter} />
         </div>

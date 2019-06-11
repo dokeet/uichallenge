@@ -7,3 +7,15 @@ h1 {
     grid-gap: 0.5em;
     padding: 0.5rem;
 }
+.offline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 25px;
+    background-color: rgb(236, 236, 236);
+    color: rgb(104, 104, 104);
+    padding: 0.5rem;
+    position: fixed;
+    bottom: 0px;
+}

@@ -4,8 +4,9 @@ export default function ShopItem({
   photo,
   name,
   price,
-  amount,
+  counter,
   id,
+  i,
   originalPrice,
   fromDispatch,
 }) {
@@ -23,19 +24,19 @@ export default function ShopItem({
           <p className={styles.price}>${originalPrice}</p>
         )}
         <div className={styles.amountWrapper}>
-          {amount >= 1 ? (
+          {counter >= 1 ? (
             <div className={styles.amounts}>
               <button
                 onClick={() =>
-                  fromDispatch({ type: "SUBSTRACT_FROM_CART", payload: id })
+                  fromDispatch({ type: "SUBSTRACT_FROM_CART", payload: i })
                 }
               >
                 -
               </button>
-              <span className={styles.amount}>{amount}</span>
+              <span className={styles.amount}>{counter}</span>
               <button
                 onClick={() =>
-                  fromDispatch({ type: "ADD_TO_CART", payload: id })
+                  fromDispatch({ type: "ADD_TO_CART", payload: i })
                 }
               >
                 +
@@ -45,7 +46,7 @@ export default function ShopItem({
             <div className={styles.amounts}>
               <button
                 onClick={() =>
-                  fromDispatch({ type: "ADD_TO_CART", payload: id })
+                  fromDispatch({ type: "ADD_TO_CART", payload: i })
                 }
               >
                 Agregar al carrito
