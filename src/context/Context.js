@@ -3,7 +3,8 @@ import axios from "axios"
 import { useImmerReducer } from "use-immer"
 
 export const Context = React.createContext()
-const initialState = JSON.parse(window.localStorage.getItem("shop_state")) || {
+
+let initialState = {
   products: [],
   totalAmount: 0,
   totalCounter: 0,
@@ -51,37 +52,31 @@ const Provider = ({ children }) => {
 
   // localstorage
 
-  useEffect(() => {
-    window.localStorage.setItem("shop_state", JSON.stringify(state));
-  }, [state])
-
-
-
+  const fetchData = async page => {
+    const res = await axios(
+      `https://challenge-api.aerolab.co/products?page=${page}`
+    )
+    res.data.products.forEach(e => {
+      e.counter = 0
+      // replace jpg for webp
+      e.photo = e.photo.replace("jpg", "webp")
+    })
+    //filter older elements
+    const dateNow = new Date(Date.now())
+    res.data.products = res.data.products.filter(elem => {
+      const d = new Date(elem.updatedAt)
+      const diffTime = Math.abs(d.getTime() - dateNow.getTime())
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      if (diffDays < 30) return true
+    })
+    dispatch({ type: "FETCH_INITIAL", payload: res })
+    return res
+  }
   function loadMore() {
     setPage(prevPage => prevPage + 1)
   }
   useEffect(() => {
     if (page <= state.page_count) {
-      const fetchData = async page => {
-        const res = await axios(
-          `https://challenge-api.aerolab.co/products?page=${page}`
-        )
-        res.data.products.forEach(e => {
-          e.counter = 0
-          // replace jpg for webp
-          e.photo = e.photo.replace("jpg", "webp")
-        })
-        //filter older elements
-        const dateNow = new Date(Date.now())
-        res.data.products = res.data.products.filter(elem => {
-          const d = new Date(elem.updatedAt)
-          const diffTime = Math.abs(d.getTime() - dateNow.getTime())
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-          if (diffDays < 30) return true;
-        })
-        dispatch({ type: "FETCH_INITIAL", payload: res })
-        return res
-      }
       fetchData(page)
     }
   }, [page])
