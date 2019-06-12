@@ -34,8 +34,9 @@ module.exports = {
         fonts: [
           {
             family: "Roboto",
-            variants: [`400`, `700`]
-          }
+            variants: [`400`, `700`],
+            fontDisplay: "swap"            
+          },
         ]
       }
     },
