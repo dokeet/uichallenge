@@ -35,9 +35,8 @@ module.exports = {
           {
             family: "Roboto",
             variants: [`400`, `700`],
-            fontDisplay: "swap"            
-          },
-        ]
+          },         
+        ],
       }
     },
    `gatsby-plugin-offline`,
