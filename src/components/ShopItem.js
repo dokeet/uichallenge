@@ -5,7 +5,6 @@ export default function ShopItem({
   name,
   price,
   counter,
-  id,
   i,
   originalPrice,
   fromDispatch,

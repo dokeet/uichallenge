@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import axios from "axios"
 import { useImmerReducer } from "use-immer"
 
@@ -16,7 +16,7 @@ let initialState = {
 const reducer = (draft, action) => {
   switch (action.type) {
     case "FETCH_INITIAL":
-      action.payload.data.products.forEach(e => {
+      action.payload.products.forEach(e => {
         draft.products.push(e)
       })
       return
@@ -39,6 +39,8 @@ const reducer = (draft, action) => {
         : (draft.totalAmount -= s_originalPrice)
       return
     case "FILTER":
+      // todo
+      // implement data filtering
       draft.products = draft.products.filter(r => r.price < 50)
       return
     default:
@@ -50,12 +52,12 @@ const Provider = ({ children }) => {
   const [state, dispatch] = useImmerReducer(reducer, initialState)
   const [page, setPage] = React.useState(1)
 
-  // localstorage
 
   const fetchData = async page => {
     const res = await axios(
       `https://challenge-api.aerolab.co/products?page=${page}`
     )
+
     res.data.products.forEach(e => {
       e.counter = 0
       // replace jpg for webp
@@ -69,15 +71,16 @@ const Provider = ({ children }) => {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
       if (diffDays < 30) return true
     })
-    dispatch({ type: "FETCH_INITIAL", payload: res })
+
+    dispatch({ type: "FETCH_INITIAL", payload: res.data })
     return res
   }
   function loadMore() {
     setPage(prevPage => prevPage + 1)
   }
-  useEffect(() => {
+  React.useEffect(() => {
     if (page <= state.page_count) {
-      fetchData(page)
+        fetchData(page)    
     }
   }, [page])
   return (

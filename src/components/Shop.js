@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import Header from "./header"
 import ShopItem from "./ShopItem"
 import useInfiniteScroll from "../hooks/useInfiniteScroll"
@@ -14,13 +14,14 @@ export default function Shop() {
     setIsFetching(false)
     loadMore()
   }
-  function handleNetwork(event) {
+  function handleNetwork() {
     navigator.onLine ? setOffline(false) : setOffline(true)
   }
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener("offline", handleNetwork)
     window.addEventListener("online", handleNetwork)
   }, [])
+  
   return (
     <>
       <Header
